@@ -37,6 +37,10 @@ public class Points : MonoBehaviour {
       Debug.Log("Saved Highscore " + score);
       PlayerPrefs.SetInt("Highscore", score);
     }
-    
+  }
+
+  public int getScore()
+  {
+    return this.score;
   }
 }

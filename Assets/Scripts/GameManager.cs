@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 		GameObject.Find("GameScreen").GetComponent<Canvas>().enabled = true;
 		GameObject.Find("Points").GetComponent<Points>().ResetScore();
 		GameObject.Find("EndPoints").GetComponent<Points>().ResetScore();
+		cdScript.init(selectedGameMode);
 		cdScript.enabled = true;
 		GameObject.Find("1-1").GetComponent<onClick>().SetGameOver(false);
 	}

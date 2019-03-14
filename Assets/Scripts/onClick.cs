@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -11,6 +12,7 @@ public class onClick : MonoBehaviour, IPointerClickHandler
     public Points endPointsScript;
 
     public Countdown cdScript;
+    private string currentGameMode;
 
     // Use this for initialization
     void Awake()
@@ -24,6 +26,8 @@ public class onClick : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        currentGameMode = GameObject.Find("GameManager").GetComponent<GameManager>().selectedGameMode;
+
         GameObject.Find("Timer").GetComponent<Countdown>().FirstClicked();
         if (gameOver)
         {
@@ -41,18 +45,10 @@ public class onClick : MonoBehaviour, IPointerClickHandler
             pointsScript.IncreaseScore();
             endPointsScript.IncreaseScore();
         }
+        
+        cdScript.updateTimer(currentGameMode, pointsScript.getScore());
 
         //Debug.Log("Clicked on " + this.GetComponent<Image>().name);
-    }
-
-    private double addTime = 0.33;
-    private int counter = 0;
-
-    void EnduranceMode()
-    {
-        if (GameObject.Find("GameManager").GetComponent<GameManager>().selectedGameMode == "EnduranceMode")
-        {
-        }
     }
 
     void LoseGame()

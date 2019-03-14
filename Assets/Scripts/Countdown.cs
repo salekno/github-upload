@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,16 +11,28 @@ public class Countdown : MonoBehaviour
 
     private bool clicked;
 
-    private float timer;
+    private double timer;
     private int seconds;
+    private double timerIncrement;
 
     // Use this for initialization
     void Awake()
     {
+        timerIncrement = 1;
         clicked = false;
         pointsScript = GameObject.Find("Points").GetComponent<Points>();
         this.enabled = false;
         this.GetComponent<Text>().text = seconds.ToString();
+        Debug.Log("Set seconds to " + seconds.ToString());
+    }
+
+    private void OnEnable()
+    {
+        timerIncrement = 1;
+        clicked = false;
+        pointsScript = GameObject.Find("Points").GetComponent<Points>();
+        this.GetComponent<Text>().text = seconds.ToString();
+        Debug.Log("Set seconds to " + seconds.ToString());
     }
 
     public void init(string gameMode)
@@ -33,6 +46,7 @@ public class Countdown : MonoBehaviour
             default: //TODO setup default mode?
                 break;
         }
+        Debug.Log("Init with gameMode " + gameMode);
     }
 
     private void SetupSprintMode()
@@ -56,13 +70,28 @@ public class Countdown : MonoBehaviour
             return;
         }
 
-        //TODO check gameMode and work with timer accordingly
         timer -= Time.deltaTime;
-        TimerCount((int) (timer % 60) + 1);
+        updateSeconds((int) (timer % 60) + 1);
         this.GetComponent<Text>().text = seconds.ToString();
         if (timer <= 0)
         {
             GameOver();
+        }
+    }
+
+    public void updateTimer(string gameMode, int score)
+    {
+        switch (gameMode)
+        {
+            case "EnduranceMode":
+                if (score % 5 == 0)
+                {
+                    this.timer += timerIncrement;
+                    Debug.Log(string.Format("Increased Timer({0}) by {1}", this.timer, timerIncrement));
+                    timerIncrement *= 0.9;
+                }
+
+                break;
         }
     }
 
@@ -81,6 +110,7 @@ public class Countdown : MonoBehaviour
         this.GetComponentInParent<Canvas>().enabled = false;
         GameObject.Find("GameOver").GetComponent<Canvas>().enabled = true;
         GameObject.Find("PlayAgain").GetComponent<PlayAgain>().enabled = false;
+        GameObject.Find("BackToMenu").GetComponent<BackToMenu>().enabled = false;
         StartCoroutine(Wait());
     }
 
@@ -88,6 +118,7 @@ public class Countdown : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         GameObject.Find("PlayAgain").GetComponent<PlayAgain>().enabled = true;
+        GameObject.Find("BackToMenu").GetComponent<BackToMenu>().enabled = true;
     }
 
     public void FirstClicked()
@@ -95,7 +126,7 @@ public class Countdown : MonoBehaviour
         this.clicked = true;
     }
 
-    private void TimerCount(int time)
+    private void updateSeconds(int time)
     {
         if (time <= 5)
         {
