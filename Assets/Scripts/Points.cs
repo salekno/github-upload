@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Points : MonoBehaviour {
@@ -24,7 +25,7 @@ public class Points : MonoBehaviour {
 
   public void ResetScore()
   {
-    Debug.Log("Reset score at " + score);
+    Debug.Log(string.Format("Reset score{0} to Zero - {1}", score, ToString()));
     score = 0;
     this.GetComponent<Text>().text = score.ToString();
   }

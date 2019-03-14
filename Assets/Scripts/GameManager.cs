@@ -12,13 +12,7 @@ public class GameManager : MonoBehaviour
 	public void StartSprintMode()
 	{
 		selectedGameMode = "SprintMode";
-		GameObject.Find("MainMenu").GetComponent<Canvas>().enabled = false;
-		GameObject.Find("GameScreen").GetComponent<Canvas>().enabled = true;
-		GameObject.Find("Points").GetComponent<Points>().ResetScore();
-		GameObject.Find("EndPoints").GetComponent<Points>().ResetScore();
-		GameObject.Find("1-1").GetComponent<onClick>().SetGameOver(false);
-		timer.GetComponent<Text>().enabled = true;
-		cdScript.enabled = true;
+		SetupGame();
 	}
 
 	public void PlayAgain()
@@ -40,6 +34,11 @@ public class GameManager : MonoBehaviour
 	public void StartEnduranceMode()
 	{
 		selectedGameMode = "EnduranceMode";
+		SetupGame();
+	}
+
+	private void SetupGame()
+	{
 		GameObject.Find("MainMenu").GetComponent<Canvas>().enabled = false;
 		GameObject.Find("GameScreen").GetComponent<Canvas>().enabled = true;
 		GameObject.Find("Points").GetComponent<Points>().ResetScore();
@@ -47,6 +46,7 @@ public class GameManager : MonoBehaviour
 		GameObject.Find("1-1").GetComponent<onClick>().SetGameOver(false);
 		timer.GetComponent<Text>().enabled = true;
 		cdScript.enabled = true;
+		cdScript.init(selectedGameMode);
 	}
 
 	

@@ -16,12 +16,35 @@ public class Countdown : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        seconds = 30;
-        timer = 30;
         clicked = false;
         pointsScript = GameObject.Find("Points").GetComponent<Points>();
         this.enabled = false;
         this.GetComponent<Text>().text = seconds.ToString();
+    }
+
+    public void init(string gameMode)
+    {
+        switch (gameMode)
+        {
+            case "SprintMode": SetupSprintMode();
+                break;
+            case "EnduranceMode": SetupEnduranceMode();
+                break;
+            default: //TODO setup default mode?
+                break;
+        }
+    }
+
+    private void SetupSprintMode()
+    {
+        seconds = 30;
+        timer = 30;
+    }
+
+    private void SetupEnduranceMode()
+    {
+        seconds = 10;
+        timer = 10;
     }
 
 
@@ -33,6 +56,7 @@ public class Countdown : MonoBehaviour
             return;
         }
 
+        //TODO check gameMode and work with timer accordingly
         timer -= Time.deltaTime;
         TimerCount((int) (timer % 60) + 1);
         this.GetComponent<Text>().text = seconds.ToString();
