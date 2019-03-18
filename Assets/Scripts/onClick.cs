@@ -46,7 +46,7 @@ public class onClick : MonoBehaviour, IPointerClickHandler
             endPointsScript.IncreaseScore();
         }
         
-        cdScript.updateTimer(currentGameMode, pointsScript.getScore());
+        cdScript.UpdateTimer(currentGameMode, pointsScript.GetScore(currentGameMode));
 
         //Debug.Log("Clicked on " + this.GetComponent<Image>().name);
     }
@@ -54,7 +54,7 @@ public class onClick : MonoBehaviour, IPointerClickHandler
     void LoseGame()
     {
         Debug.Log("LoseGame");
-        pointsScript.SaveHighscore();
+        GameObject.Find("GameManager").GetComponent<GameManager>().SaveHighscore();
         cdScript.GameOver();
     }
 

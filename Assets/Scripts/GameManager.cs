@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 		GameObject.Find("GameScreen").GetComponent<Canvas>().enabled = true;
 		GameObject.Find("Points").GetComponent<Points>().ResetScore();
 		GameObject.Find("EndPoints").GetComponent<Points>().ResetScore();
-		cdScript.init(selectedGameMode);
+		cdScript.Init(selectedGameMode);
 		cdScript.enabled = true;
 		GameObject.Find("1-1").GetComponent<onClick>().SetGameOver(false);
 	}
@@ -47,7 +47,17 @@ public class GameManager : MonoBehaviour
 		GameObject.Find("1-1").GetComponent<onClick>().SetGameOver(false);
 		timer.GetComponent<Text>().enabled = true;
 		cdScript.enabled = true;
-		cdScript.init(selectedGameMode);
+		cdScript.Init(selectedGameMode);
+	}
+
+	public void SaveHighscore()
+	{
+		GameObject.Find("EndPoints").GetComponent<Points>().SaveHighscore(selectedGameMode);
+	}
+
+	public void DisplayHighscore()
+	{
+		GameObject.Find("Highscore").GetComponent<Highscore>().DisplayHighscore(selectedGameMode);
 	}
 
 	

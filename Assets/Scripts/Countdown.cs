@@ -31,11 +31,9 @@ public class Countdown : MonoBehaviour
         timerIncrement = 1;
         clicked = false;
         pointsScript = GameObject.Find("Points").GetComponent<Points>();
-        this.GetComponent<Text>().text = seconds.ToString();
-        Debug.Log("Set seconds to " + seconds.ToString());
     }
 
-    public void init(string gameMode)
+    public void Init(string gameMode)
     {
         switch (gameMode)
         {
@@ -46,6 +44,8 @@ public class Countdown : MonoBehaviour
             default: //TODO setup default mode?
                 break;
         }
+        this.GetComponent<Text>().text = seconds.ToString();
+        Debug.Log("Set seconds to " + seconds.ToString());
         Debug.Log("Init with gameMode " + gameMode);
     }
 
@@ -71,7 +71,7 @@ public class Countdown : MonoBehaviour
         }
 
         timer -= Time.deltaTime;
-        updateSeconds((int) (timer % 60) + 1);
+        UpdateSeconds((int) (timer % 60) + 1);
         this.GetComponent<Text>().text = seconds.ToString();
         if (timer <= 0)
         {
@@ -79,16 +79,16 @@ public class Countdown : MonoBehaviour
         }
     }
 
-    public void updateTimer(string gameMode, int score)
+    public void UpdateTimer(string gameMode, int score)
     {
         switch (gameMode)
         {
             case "EnduranceMode":
-                if (score % 5 == 0)
+                if (score % 5 == 0 && score != 0)
                 {
                     this.timer += timerIncrement;
                     Debug.Log(string.Format("Increased Timer({0}) by {1}", this.timer, timerIncrement));
-                    timerIncrement *= 0.9;
+                    timerIncrement *= 0.95;
                 }
 
                 break;
@@ -98,11 +98,9 @@ public class Countdown : MonoBehaviour
 
     public void GameOver()
     {
-        pointsScript.SaveHighscore();
-        timer = 30;
-        seconds = 30;
+        GameObject.Find("GameManager").GetComponent<GameManager>().SaveHighscore();
         Debug.Log("GameOver");
-        hsScript.DisplayHighscore();
+        GameObject.Find("GameManager").GetComponent<GameManager>().DisplayHighscore();
         this.clicked = false;
         this.enabled = false;
         this.GetComponent<Text>().text = seconds.ToString();
@@ -126,7 +124,7 @@ public class Countdown : MonoBehaviour
         this.clicked = true;
     }
 
-    private void updateSeconds(int time)
+    private void UpdateSeconds(int time)
     {
         if (time <= 5)
         {

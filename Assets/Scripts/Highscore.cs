@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Highscore : MonoBehaviour {
@@ -9,13 +10,13 @@ public class Highscore : MonoBehaviour {
 	void Awake () {
     highscore = PlayerPrefs.GetInt("Highscore");
     this.GetComponent<Text>().text = highscore.ToString();
-		Debug.Log("Loaded Highscore");
+		Debug.Log("Loaded Highscore: " + highscore);
 	}
 
-  public void DisplayHighscore()
+  public void DisplayHighscore(String gameMode)
   {
 	Debug.Log("show highscore");
-    highscore = PlayerPrefs.GetInt("Highscore");
+    highscore = PlayerPrefs.GetInt("Highscore" + gameMode);
     this.GetComponent<Text>().text = "Highscore: " + highscore;
   }
   

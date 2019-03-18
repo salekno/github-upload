@@ -25,21 +25,21 @@ public class Points : MonoBehaviour {
 
   public void ResetScore()
   {
-    Debug.Log(string.Format("Reset score{0} to Zero - {1}", score, ToString()));
+    Debug.Log(string.Format("Reset score({0}) to Zero - {1}", score, ToString()));
     score = 0;
     this.GetComponent<Text>().text = score.ToString();
   }
 
-  public void SaveHighscore()
+  public void SaveHighscore(String gameMode)
   {
-    if(score > PlayerPrefs.GetInt("Highscore"))
+    if(score > PlayerPrefs.GetInt("Highscore" + gameMode))
     {
       Debug.Log("Saved Highscore " + score);
-      PlayerPrefs.SetInt("Highscore", score);
+      PlayerPrefs.SetInt("Highscore" + gameMode, score);
     }
   }
 
-  public int getScore()
+  public int GetScore(String gameMode)
   {
     return this.score;
   }
